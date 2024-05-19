@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+    int sz;
+    cout<<"Enter number of process : ";
+    cin>>sz;
+    string prs[sz];
+    cout<<"Enter process name:"<<endl;
+    for(int i=0; i<sz; i++) {
+        cin>>prs[i];
+    }
+    cout<<"Enter burst time :"<<endl;
+    int bt[sz];
+    for(int i=0; i<sz; i++) {
+        cin>>bt[i];
+    }
+    for(int i=0; i<sz-1; i++) {
+        for(int j=0; j<sz-1; j++) {
+            if(bt[j]>bt[j+1]) {
+                int temp=bt[j];
+                bt[j]=bt[j+1];
+                bt[j+1]=temp;
+                string str=prs[j];
+                prs[j]=prs[j+1];
+                prs[j+1]=str;
+            }
+        }
+    }
+    int wt[sz],tat[sz],sum1=0,sum2=0;
+    for(int i=0; i<sz; i++) {
+        if(i==0){
+            wt[i]=0;
+        }else{
+            wt[i]=wt[i-1]+bt[i-1];
+            sum1+=wt[i];
+        }
+        tat[i]=wt[i]+bt[i];
+        sum2+=tat[i];
+    }
+    cout<<"Sorted process\t\t"<<"sorted burst time\t\t"<<"waiting time\t\t"<<"turn around time"<<endl;
+    for(int i=0;i<sz;i++){
+        cout<<prs[i]<<"\t\t\t"<<bt[i]<<"\t\t\t"<<wt[i]<<"\t\t\t"<<tat[i]<<endl;
+    }
+    cout<<"___________________________________________________"<<endl;
+    for(int i=0;i<sz;i++){
+        cout<<"| "<<prs[i]<<" | "<<tat[i]<<" | ";
+    }
+    cout<<endl<<"____________________________________________________"<<endl;
+    return 0;
+}
